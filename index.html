@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة علم التجويد والقراءات العشر الكبرى والصغرى</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#fffdf0',
+                            100: '#fcf8d9',
+                            200: '#faeea8',
+                            300: '#f6df6e',
+                            400: '#f1cb38',
+                            500: '#d4af37',
+                            600: '#b88c24',
+                            700: '#93681b',
+                            800: '#79511d',
+                            900: '#67421d'
+                        },
+                        emerald: {
+                            800: '#064e3b',
+                            900: '#0f382c',
+                            950: '#05221a'
+                        },
+                        navy: {
+                            800: '#0f2342',
+                            900: '#0a192f',
+                            950: '#040d1a'
+                        },
+                        parchment: '#fdfbf7',
+                        parchmentDark: '#0e1626'
+                    },
+                    fontFamily: {
+                        amiri: ['Amiri', 'serif'],
+                        naskh: ['Noto Naskh Arabic', 'serif'],
+                        kufi: ['Reem Kufi', 'sans-serif'],
+                        scheherazade: ['Scheherazade New', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Naskh Arabic', serif;
+            background-color: #fdfbf7;
+            color: #1a202c;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark body {
+            background-color: #0a192f;
+            color: #e2e8f0;
+        }
+
+        .islamic-pattern {
+            background-image: radial-gradient(#d4af37 0.75px, transparent 0.75px), radial-gradient(#d4af37 0.75px, #fdfbf7 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.07;
+        }
+
+        .dark .islamic-pattern {
+            background-image: radial-gradient(#d4af37 0.75px, transparent 0.75px), radial-gradient(#d4af37 0.75px, #0a192f 0.75px);
+            opacity: 0.12;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0a192f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b88c24;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 3500px;
+            transition: max-height 0.7s ease-in;
+        }
+
+        .pdf-modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative antialiased text-base leading-relaxed">
+
+    <!-- Islamic Background Pattern -->
+    <div class="fixed inset-0 islamic-pattern pointer-events-none z-0"></div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="sticky top-0 z-40 bg-emerald-900/95 dark:bg-navy-950/95 text-white shadow-2xl backdrop-blur-md border-b-2 border-gold-500/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-12 h-12 rounded-full bg-gold-500/20 border-2 border-gold-500 flex items-center justify-center text-gold-400 text-2xl font-kufi shadow-inner">
+                        <i class="fa-solid fa-quran"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-amiri font-bold text-xl sm:text-2xl text-gold-400 tracking-wide leading-tight">
+                            موسوعة علم التجويد والقراءات
+                        </h1>
+                        <p class="text-xs text-emerald-200 dark:text-gray-300 hidden sm:block">
+                            منهاج الدارسين - إعداد خادم القرآن الكريم محمد جهاد فؤاد عبد الله
+                        </p>
+                    </div>
+                </div>
+
+                <nav class="hidden xl:flex items-center space-x-1 space-x-reverse text-sm font-medium">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-lg transition-all text-gold-400 bg-emerald-800/60 dark:bg-navy-900">
+                        <i class="fa-solid fa-house ml-1"></i> الرئيسة
+                    </button>
+                    <button onclick="switchTab('makharij')" id="nav-makharij" class="nav-btn px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/40 dark:hover:bg-navy-800 transition-all">
+                        <i class="fa-solid fa-head-side-cough ml-1"></i> المخارج والصفات
+                    </button>
+                    <button onclick="switchTab('tajweed')" id="nav-tajweed" class="nav-btn px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/40 dark:hover:bg-navy-800 transition-all">
+                        <i class="fa-solid fa-book-quran ml-1"></i> مستويات التجويد الـ 4
+                    </button>
+                    <button onclick="switchTab('qiraat')" id="nav-qiraat" class="nav-btn px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/40 dark:hover:bg-navy-800 transition-all">
+                        <i class="fa-solid fa-users-rays ml-1"></i> القراءات العشر
+                    </button>
+                    <button onclick="switchTab('media')" id="nav-media" class="nav-btn px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/40 dark:hover:bg-navy-800 transition-all">
+                        <i class="fa-solid fa-circle-play ml-1"></i> المكتبة المرئية
+                    </button>
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/40 dark:hover:bg-navy-800 transition-all">
+                        <i class="fa-solid fa-graduation-cap ml-1"></i> الاختبار التفاعلي
+                    </button>
+                </nav>
+
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex items-center bg-emerald-950/60 dark:bg-navy-900/80 rounded-lg border border-gold-500/30 p-1 text-xs">
+                        <button onclick="changeFontSize(-1)" class="w-7 h-7 flex items-center justify-center rounded hover:bg-gold-500/20 text-gold-400 font-bold" title="تصغير الخط">أ-</button>
+                        <button onclick="resetFontSize()" class="w-7 h-7 flex items-center justify-center rounded hover:bg-gold-500/20 text-gold-400" title="إعادة ضبط">أ</button>
+                        <button onclick="changeFontSize(1)" class="w-7 h-7 flex items-center justify-center rounded hover:bg-gold-500/20 text-gold-400 font-bold" title="تكبير الخط">أ+</button>
+                    </div>
+
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-emerald-950/60 dark:bg-navy-900/80 border border-gold-500/30 text-gold-400 hover:bg-gold-500/20 transition-all" title="تبديل المظهر">
+                        <i id="theme-icon" class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <button onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg bg-emerald-950/60 dark:bg-navy-900/80 border border-gold-500/30 text-gold-400">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden xl:hidden border-t border-gold-500/20 bg-emerald-950 dark:bg-navy-950 px-4 py-3 space-y-2 text-sm">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded hover:bg-gold-500/20 text-gold-400"><i class="fa-solid fa-house ml-2"></i>الرئيسة</button>
+            <button onclick="switchTab('makharij'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded hover:bg-gold-500/20"><i class="fa-solid fa-head-side-cough ml-2"></i>المخارج والصفات</button>
+            <button onclick="switchTab('tajweed'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded hover:bg-gold-500/20"><i class="fa-solid fa-book-quran ml-2"></i>أحكام التجويد (الـ 4 مستويات)</button>
+            <button onclick="switchTab('qiraat'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded hover:bg-gold-500/20"><i class="fa-solid fa-users-rays ml-2"></i>القراءات العشر</button>
+            <button onclick="switchTab('media'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded hover:bg-gold-500/20"><i class="fa-solid fa-circle-play ml-2"></i>المكتبة المرئية</button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu();" class="block w-full text-right px-3 py-2 rounded hover:bg-gold-500/20"><i class="fa-solid fa-graduation-cap ml-2"></i>الاختبار التفاعلي</button>
+        </div>
+    </header>
+
+    <!-- Search Bar Sub-header -->
+    <div class="relative z-30 bg-gold-500/10 dark:bg-navy-900/80 border-b border-gold-500/30 py-3 px-4 shadow-inner">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="relative w-full md:w-1/2">
+                <input type="text" id="globalSearch" oninput="handleGlobalSearch(this.value)" 
+                       placeholder="ابحث في الموسوعة (مثل: الإدغام بغنة، الإظهار الحلقي، هاء الكناية، ورش، الشاطبية...)" 
+                       class="w-full pr-10 pl-4 py-2.5 rounded-xl border border-gold-500/40 bg-white dark:bg-navy-950 text-gray-800 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold-500 shadow-sm text-sm">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-3.5 text-gold-600 dark:text-gold-400"></i>
+                <div id="searchResults" class="hidden absolute top-full right-0 left-0 mt-2 bg-white dark:bg-navy-900 border border-gold-500/40 rounded-xl shadow-2xl max-h-96 overflow-y-auto z-50 p-2 space-y-2"></div>
+            </div>
+
+            <div class="flex items-center gap-3 text-xs font-semibold text-emerald-900 dark:text-gold-300 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+                <span class="flex items-center gap-1.5 bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-500/30 px-3 py-1.5 rounded-full whitespace-nowrap">
+                    <i class="fa-solid fa-layer-group text-emerald-600"></i> 4 مستويات متدرجة
+                </span>
+                <span class="flex items-center gap-1.5 bg-gold-100 dark:bg-gold-950/80 border border-gold-500/30 px-3 py-1.5 rounded-full whitespace-nowrap">
+                    <i class="fa-solid fa-certificate text-gold-600"></i> رواية حفص الشاطبية
+                </span>
+                <span class="flex items-center gap-1.5 bg-navy-100 dark:bg-navy-800 border border-navy-500/30 px-3 py-1.5 rounded-full text-navy-900 dark:text-gray-200 whitespace-nowrap">
+                    <i class="fa-solid fa-book text-navy-600 dark:text-gold-400"></i> منهاج الدارسين
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main id="appContent" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 z-10">
+
+        <!-- TAB 1: HOME SECTION -->
+        <section id="tab-home" class="tab-content space-y-12">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900 via-navy-900 to-navy-950 text-white p-8 sm:p-12 shadow-2xl border-2 border-gold-500/50">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-gold-500/10 blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-4xl space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/40 px-4 py-1.5 rounded-full text-gold-300 text-sm font-medium">
+                        <i class="fa-solid fa-scroll"></i> الموسوعة الشاملة لإسناد القرآن الكريم
+                    </div>
+                    <h1 class="font-amiri font-bold text-3xl sm:text-5xl font-bold leading-tight gold-gradient-text">
+                        موسوعة علم التجويد والقراءات العشر الكبرى والصغرى
+                    </h1>
+                    <p class="text-base sm:text-lg text-gray-200 leading-relaxed font-naskh">
+                        صرح إسلامي رقمي متكامل يعتمد مادة <strong class="text-gold-300">"منهاج الدارسين"</strong> لإعداد خادم القرآن الكريم <strong class="text-gold-300">محمد جهاد فؤاد عبد الله</strong>. يتضمن الشرح التفصيلي لأحكام التجويد الموزعة على أربعة مستويات تعليمية متدرجة، التشريح التفاعلي لمخارج الحروف والصفات، القراءات العشر الكبرى والصغرى، والكتب المصدرية المتاحة للتحميل والمطالعة المباشرة.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="switchTab('tajweed')" class="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-navy-950 font-bold px-6 py-3 rounded-xl shadow-lg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> ابدأ المستويات التجويدية الأربعة
+                        </button>
+                        <button onclick="switchTab('makharij')" class="bg-navy-800/80 hover:bg-navy-800 border border-gold-500/40 text-gold-300 font-medium px-6 py-3 rounded-xl transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-head-side-cough"></i> استكشف المخارج والصفات
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="font-amiri font-bold text-3xl text-emerald-900 dark:text-gold-400 border-r-4 border-gold-500 pr-3">
+                    المستويات التعليمية المتدرجة في علم التجويد
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div onclick="switchTab('tajweed'); switchTajweedSub('level1');" class="cursor-pointer bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/30 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-emerald-800 dark:text-emerald-400 text-xl mb-4 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all font-bold">1</div>
+                        <h3 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400 mb-2">المستوى الأول (التأسيسي)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">مدخل علم التجويد، اللحن الجلي والخفي، الاستعاذة والبسملة، النون الساكنة والتنوين، الميم الساكنة والغنة.</p>
+                        <span class="text-xs font-bold text-gold-600 dark:text-gold-400 flex items-center gap-1">تصفح المستوى <i class="fa-solid fa-arrow-left text-xs"></i></span>
+                    </div>
+                    <div onclick="switchTab('tajweed'); switchTajweedSub('level2');" class="cursor-pointer bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/30 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-gold-100 dark:bg-gold-950 border border-gold-500/40 flex items-center justify-center text-gold-700 dark:text-gold-400 text-xl mb-4 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all font-bold">2</div>
+                        <h3 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400 mb-2">المستوى الثاني (التكميلي)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">أحكام المدود المتكاملة، مخارج الحروف وألقابها، الصفات اللازمة والعارضة، والتفخيم والترقيق والراءات.</p>
+                        <span class="text-xs font-bold text-gold-600 dark:text-gold-400 flex items-center gap-1">تصفح المستوى <i class="fa-solid fa-arrow-left text-xs"></i></span>
+                    </div>
+                    <div onclick="switchTab('tajweed'); switchTajweedSub('level3');" class="cursor-pointer bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/30 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-navy-100 dark:bg-navy-800 border border-navy-500/40 flex items-center justify-center text-navy-800 dark:text-gold-400 text-xl mb-4 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all font-bold">3</div>
+                        <h3 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400 mb-2">المستوى الثالث (المتقدم)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">العلاقات بين الحروف، اللامات الساكنة، همزة الوصل والقطع، الوقف والابتداء، السكت، والروم والإشمام.</p>
+                        <span class="text-xs font-bold text-gold-600 dark:text-gold-400 flex items-center gap-1">تصفح المستوى <i class="fa-solid fa-arrow-left text-xs"></i></span>
+                    </div>
+                    <div onclick="switchTab('tajweed'); switchTajweedSub('level4');" class="cursor-pointer bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/30 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all group border-l-4 border-l-gold-500">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-900 text-gold-400 border border-gold-500/40 flex items-center justify-center text-xl mb-4 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all font-bold">4</div>
+                        <h3 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400 mb-2">مستوى الإجازة (رواية حفص)</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4">أصول الشاطبية، انفرادات حفص الـ 39، المقطوع والموصول وأبيات الجزرية، التاءات، موازين الحروف السبعة.</p>
+                        <span class="text-xs font-bold text-gold-600 dark:text-gold-400 flex items-center gap-1">تصفح مستوى الإجازة <i class="fa-solid fa-arrow-left text-xs"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-emerald-950/20 via-navy-900/30 to-emerald-950/20 border border-gold-500/40 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-xl">
+                <div class="w-24 h-24 rounded-full bg-gold-500/20 border-2 border-gold-500 flex-shrink-0 flex items-center justify-center text-gold-500 text-4xl shadow-md">
+                    <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div class="space-y-3 text-center md:text-right">
+                    <h3 class="font-amiri font-bold text-2xl text-emerald-900 dark:text-gold-400">إعداد خادم القرآن الكريم: محمد جهاد فؤاد عبد الله</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-naskh">
+                        تمت صياغة وترتيب مادة هذه الموسوعة العلمية وتوزيعها بدقة بناءً على سلسلة ملخصات كتاب <strong class="text-gold-600 dark:text-gold-400">"منهاج الدارسين"</strong> الصادرة في جمادى الأولى لعام 1448هـ، لتوفر للدارس والمعلم مرجعاً شاملاً من التأسيس حتى دراسة الأصول وانفرادات رواية حفص عن عاصم من طريق الشاطبية.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ARTICULATION POINTS -->
+        <section id="tab-makharij" class="tab-content hidden space-y-8">
+            <div class="border-b border-gold-500/30 pb-4">
+                <h2 class="font-amiri text-3xl font-bold text-emerald-900 dark:text-gold-400 flex items-center gap-3">
+                    <i class="fa-solid fa-head-side-cough"></i> المخارج الـ 17 الموزعة على المناطق الـ 5 والصفات
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">الشرح التشريحي لمخارج الحروف وصفاتها اللازمة والعارضة استناداً لقول الإمام ابن الجزري المختار.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/40 shadow-xl text-center space-y-4">
+                    <h3 class="font-amiri font-bold text-lg text-emerald-900 dark:text-gold-400">مخطط مخارج الحروف الرئيسية</h3>
+                    <div class="relative w-full max-w-md mx-auto bg-emerald-950/5 dark:bg-navy-950 rounded-2xl border border-gold-500/20 p-2 overflow-hidden shadow-inner flex items-center justify-center">
+                        <img src="sum/90736461dd8f517f219400275cd550ce.jpg" alt="الرسم التشريحي لمخارج الحروف الرئيسية" class="w-full h-auto rounded-xl object-contain hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">اضغط على المنطقة الملونة للوصول المباشر لتفاصيلها وحروفها.</p>
+                </div>
+                <div class="lg:col-span-7 space-y-4" id="makharijAccordionContainer"></div>
+            </div>
+        </section>
+
+        <!-- TAB 3: TAJWEED 4 LEVELS -->
+        <section id="tab-tajweed" class="tab-content hidden space-y-8">
+            <div class="border-b border-gold-500/30 pb-4">
+                <h2 class="font-amiri text-3xl font-bold text-emerald-900 dark:text-gold-400 flex items-center gap-3">
+                    <i class="fa-solid fa-book-quran"></i> المستويات التعليمية الـ 4 لأحكام التجويد
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">مصنفة بالكامل حسب كتاب <span class="text-gold-600 dark:text-gold-400 font-bold">"منهاج الدارسين"</span> مع إمكانية معاينة وتحميل الملفات المصدريّة.</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 border-b border-gold-500/20 pb-3" id="tajweedSubTabs">
+                <button onclick="switchTajweedSub('level1')" id="subtab-level1" class="tajweed-sub-btn px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-gold-500 text-navy-950 shadow">المستوى الأول (التأسيسي)</button>
+                <button onclick="switchTajweedSub('level2')" id="subtab-level2" class="tajweed-sub-btn px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-navy-900 text-gray-700 dark:text-gray-200 border border-gold-500/30">المستوى الثاني (التكميلي)</button>
+                <button onclick="switchTajweedSub('level3')" id="subtab-level3" class="tajweed-sub-btn px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-navy-900 text-gray-700 dark:text-gray-200 border border-gold-500/30">المستوى الثالث (المتقدم)</button>
+                <button onclick="switchTajweedSub('level4')" id="subtab-level4" class="tajweed-sub-btn px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-navy-900 text-gray-700 dark:text-gray-200 border border-gold-500/30 border-l-2 border-l-gold-500">مستوى الإجازة (حفص)</button>
+            </div>
+
+            <div id="tajweedSubContent" class="space-y-6"></div>
+        </section>
+
+        <!-- TAB 4: THE TEN QIRA'AT -->
+        <section id="tab-qiraat" class="tab-content hidden space-y-8">
+            <div class="border-b border-gold-500/30 pb-4">
+                <h2 class="font-amiri text-3xl font-bold text-emerald-900 dark:text-gold-400 flex items-center gap-3">
+                    <i class="fa-solid fa-users-rays"></i> القراءات العشر الكبرى والصغرى ورواتها
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">المصفوفة الشاملة للأئمة العشرة ورواتهم العشرين، والشاطبية والدرة والطيبة.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- القراءات الصغرى -->
+                <div class="bg-gradient-to-br from-emerald-900 to-emerald-950 text-white p-6 rounded-2xl border border-gold-500/40 shadow-lg space-y-4">
+                    <div>
+                        <h3 class="font-amiri font-bold text-xl text-gold-400">القراءات الصغرى (الشاطبية والدرة)</h3>
+                        <p class="text-xs text-gray-200 leading-relaxed mt-1">تشتمل على القراءات السبع من طريق الإمام الشاطبي (حرز الأماني) والثلاث المتممة لها من طريق الإمام ابن الجزري (الدرة المضيئة).</p>
+                    </div>
+                    <div class="pt-2 border-t border-gold-500/30 space-y-2">
+                        <span class="text-xs font-bold text-gold-300 block"><i class="fa-solid fa-file-pdf ml-1"></i> متون القراءات الصغرى:</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div class="bg-emerald-950/80 p-3 rounded-xl border border-gold-500/30 flex flex-col justify-between gap-2">
+                                <span class="text-xs font-bold text-gold-400"><i class="fa-solid fa-book ml-1"></i> منظومة الشاطبية</span>
+                                <div class="flex gap-1">
+                                    <button onclick="openPdfModal('sum/ar_matan_alshatbiah.pdf', 'منظومة الشاطبية (حرز الأماني ووجه التهاني)')" class="flex-1 bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-1.5 px-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1"><i class="fa-solid fa-eye"></i> معاينة</button>
+                                    <a href="sum/ar_matan_alshatbiah.pdf" download class="flex-1 bg-emerald-800 hover:bg-emerald-700 text-white font-bold py-1.5 px-2 rounded-lg border border-gold-500/30 text-xs transition-all flex items-center justify-center gap-1"><i class="fa-solid fa-download"></i> تحميل</a>
+                                </div>
+                            </div>
+                            <div class="bg-emerald-950/80 p-3 rounded-xl border border-gold-500/30 flex flex-col justify-between gap-2">
+                                <span class="text-xs font-bold text-gold-400"><i class="fa-solid fa-book ml-1"></i> منظومة الدرة المضيئة</span>
+                                <div class="flex gap-1">
+                                    <button onclick="openPdfModal('sum/ar_aldrah_almdhiah_fi_alkraat_althlath.pdf', 'منظومة الدرة المضيئة في القراءات الثلاث المتممة للعشرة')" class="flex-1 bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-1.5 px-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1"><i class="fa-solid fa-eye"></i> معاينة</button>
+                                    <a href="sum/ar_aldrah_almdhiah_fi_alkraat_althlath.pdf" download class="flex-1 bg-emerald-800 hover:bg-emerald-700 text-white font-bold py-1.5 px-2 rounded-lg border border-gold-500/30 text-xs transition-all flex items-center justify-center gap-1"><i class="fa-solid fa-download"></i> تحميل</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القراءات الكبرى -->
+                <div class="bg-gradient-to-br from-navy-900 to-navy-950 text-white p-6 rounded-2xl border border-gold-500/40 shadow-lg space-y-4">
+                    <div>
+                        <h3 class="font-amiri font-bold text-xl text-gold-400">القراءات الكبرى (طيبة النشر)</h3>
+                        <p class="text-xs text-gray-200 leading-relaxed mt-1">تشتمل على القراءات العشر من منظومة "طيبة النشر" للإمام ابن الجزري، وتتضمن نحو 980 طريقاً وتوسيعاً في أصول التسهيل والإدغام والمد.</p>
+                    </div>
+                    <div class="pt-2 border-t border-gold-500/30 space-y-2">
+                        <span class="text-xs font-bold text-gold-300 block"><i class="fa-solid fa-file-pdf ml-1"></i> متن القراءات الكبرى:</span>
+                        <div class="bg-navy-950/80 p-3 rounded-xl border border-gold-500/30 flex flex-col justify-between gap-2">
+                            <span class="text-xs font-bold text-gold-400"><i class="fa-solid fa-scroll ml-1"></i> منظومة طيبة النشر في القراءات العشر</span>
+                            <div class="flex gap-2">
+                                <button onclick="openPdfModal('sum/Tajjibatuan-nashrfial-qiraatial-ashr-Ibn al-Jazari.pdf', 'منظومة طيبة النشر في القراءات العشر')" class="flex-1 bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-1.5 px-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1"><i class="fa-solid fa-eye"></i> معاينة المستند</button>
+                                <a href="sum/Tajjibatuan-nashrfial-qiraatial-ashr-Ibn al-Jazari.pdf" download class="flex-1 bg-emerald-800 hover:bg-emerald-700 text-white font-bold py-1.5 px-2 rounded-lg border border-gold-500/30 text-xs transition-all flex items-center justify-center gap-1"><i class="fa-solid fa-download"></i> تحميل PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-amiri font-bold text-2xl text-emerald-900 dark:text-gold-400">مصفوفة الأئمة العشرة ورواة كل إمام</h3>
+                    <span class="text-xs text-gold-600 dark:text-gold-400 font-semibold bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30">
+                        <i class="fa-solid fa-circle-info ml-1"></i> اضغط على أي إمام لمشاهدة قوائم تشغيل التلاوات لرواة الإمام
+                    </span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" id="qiraatRecitersGrid"></div>
+            </div>
+        </section>
+
+        <!-- TAB 5: MEDIA & PLAYLISTS -->
+        <section id="tab-media" class="tab-content hidden space-y-8">
+            <div class="border-b border-gold-500/30 pb-4">
+                <h2 class="font-amiri text-3xl font-bold text-emerald-900 dark:text-gold-400 flex items-center gap-3">
+                    <i class="fa-solid fa-circle-play"></i> المكتبة المرئية وقوائم الشرح التشريحي
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">مقاطع فيديو مجسمة ومختارة توضح آلية حركة اللسان والشفتين من الداخل وتطبيقات أحكام التجويد.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white dark:bg-navy-900 rounded-2xl border border-gold-500/40 p-4 shadow-xl space-y-4">
+                    <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner">
+                        <iframe id="mainYouTubePlayer" class="w-full h-full" src="https://youtube.com/playlist?list=PL7HSgRWkJwjzq3OSPX6fx1Qp-OoGI-kZH&si=aZ9vb15ue4Eg7UB2" title="مرئيات التجويد والمخارج" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div>
+                        <h3 id="currentVideoTitle" class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400">قائمة الشرح التشريحي لمخارج الحروف وصفاتها - د. أيمن سويد</h3>
+                        <p id="currentVideoDesc" class="text-sm text-gray-600 dark:text-gray-300 mt-1">سلسلة مرئية توضح آلية النطق الدقيقة والتجويف الفموي ونقاط التماس للحروف.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400">القوائم المرئية المعتمدة</h3>
+                    <div class="space-y-3" id="playlistContainer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: INTERACTIVE QUIZ -->
+        <section id="tab-quiz" class="tab-content hidden space-y-8">
+            <div class="border-b border-gold-500/30 pb-4">
+                <h2 class="font-amiri text-3xl font-bold text-emerald-900 dark:text-gold-400 flex items-center gap-3">
+                    <i class="fa-solid fa-graduation-cap"></i> الاختبار التفاعلي وتقييم المستويات
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">اختبر معلوماتك في المستويات الأربعة، المخارج، انفرادات حفص، والقراءات العشر مع النتيجة الفورية.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white dark:bg-navy-900 rounded-2xl border border-gold-500/40 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div id="quizBox">
+                    <div class="flex items-center justify-between border-b border-gold-500/20 pb-4 mb-6">
+                        <span id="quizCounter" class="text-sm font-bold text-gold-600 dark:text-gold-400">السؤال 1 من 5</span>
+                        <span id="quizScoreBadge" class="text-xs bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 px-3 py-1 rounded-full font-bold">النتيجة: 0</span>
+                    </div>
+
+                    <h3 id="quizQuestion" class="font-amiri font-bold text-xl sm:text-2xl text-emerald-950 dark:text-gray-100 mb-6 leading-snug">جاري تحميل الأسئلة...</h3>
+
+                    <div id="quizOptions" class="space-y-3"></div>
+
+                    <div id="quizExplanation" class="hidden mt-6 p-4 rounded-xl border text-sm leading-relaxed"></div>
+
+                    <div class="mt-8 flex justify-end">
+                        <button id="nextQuestionBtn" onclick="nextQuestion()" class="hidden bg-emerald-800 hover:bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl shadow-md transition-all">
+                            السؤال التالي <i class="fa-solid fa-arrow-left mr-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quizResult" class="hidden text-center py-8 space-y-6">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-gold-500/20 border-4 border-gold-500 flex items-center justify-center text-gold-500 text-5xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="font-amiri font-bold text-3xl text-emerald-900 dark:text-gold-400">انتهى الاختبار!</h3>
+                    <p id="finalScoreText" class="text-xl text-gray-700 dark:text-gray-200"></p>
+                    <button onclick="resetQuiz()" class="bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold px-8 py-3 rounded-xl shadow-lg transition-all">
+                        <i class="fa-solid fa-rotate-right ml-2"></i> إعادة الاختبار
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 pdf-modal-backdrop">
+        <div class="bg-white dark:bg-navy-900 rounded-2xl border-2 border-gold-500 w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 bg-emerald-950 text-white flex items-center justify-between border-b border-gold-500/40">
+                <h3 id="pdfModalTitle" class="font-amiri font-bold text-lg text-gold-400">معاينة المستند المصدري</h3>
+                <div class="flex items-center gap-3">
+                    <a id="pdfModalDownloadLink" href="#" download class="text-xs bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold px-3 py-1.5 rounded-lg transition-all">
+                        <i class="fa-solid fa-download ml-1"></i> تحميل PDF
+                    </a>
+                    <button onclick="closePdfModal()" class="text-gray-300 hover:text-white text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-grow bg-gray-200 dark:bg-navy-950 relative">
+                <iframe id="pdfIframe" class="w-full h-full" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Imam Playlists Modal (النافذة المنبثقة لقوائم تشغيل الراويين) -->
+    <div id="imamModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 pdf-modal-backdrop overflow-y-auto">
+        <div class="bg-white dark:bg-navy-900 rounded-2xl border-2 border-gold-500 w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+            <div class="p-4 bg-emerald-950 text-white flex items-center justify-between border-b border-gold-500/40">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-play-circle text-gold-400 text-xl"></i>
+                    <h3 id="imamModalTitle" class="font-amiri font-bold text-xl text-gold-400">قوائم تشغيل تلاوات الراويين</h3>
+                </div>
+                <button onclick="closeImamModal()" class="text-gray-300 hover:text-white text-2xl transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-6 bg-parchment dark:bg-navy-950 flex-grow">
+                <p id="imamModalDesc" class="text-sm text-gray-700 dark:text-gray-300 border-b border-gold-500/20 pb-3"></p>
+                <div id="imamPlaylistsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Dynamic rendering of 2 playlists for the 2 narrators -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto bg-emerald-950 dark:bg-navy-950 text-gray-300 border-t border-gold-500/40 py-8 px-4 text-center text-sm">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <p class="font-amiri text-lg text-gold-400">
+                موسوعة علم التجويد والقراءات العشر الكبرى والصغرى &copy; 2026
+            </p>
+            <p class="text-xs text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                مستندة إلى مادة "منهاج الدارسين" إعداد خادم القرآن الكريم محمد جهاد فؤاد عبد الله (تم في جمادى الأولى 1448هـ).
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC & CURRICULUM DATA -->
+    <script>
+        // Makharij Data
+        const makharijData = [
+            {
+                id: 'jawf',
+                title: '1. الجوف (المخرج العام الأول - مقدر)',
+                subPoints: 'يشمل مخرجاً واحداً خاصاً لثلاثة حروف مدية',
+                letters: 'الألف الساكنة المفتوح ما قبلها، الواو الساكنة المضموم ما قبلها، الياء الساكنة المكسور ما قبلها (`أوي`)',
+                desc: 'هو الخلاء الواقع داخل الحلق والفم، تخرج منه حروف المد بخروج الهواء دون انحصار محقق في نقطة معينة.',
+                traits: 'صفاتها: الخفاء، الملازمة للمد والزيادة.'
+            },
+            {
+                id: 'halq',
+                title: '2. الحلق (المخرج العام الثاني - محقق)',
+                subPoints: 'يشمل 3 مخارج خاصة لـ 6 حروف (حروف الإظهار الحلقي)',
+                letters: 'أقصى الحلق: (ء ، هـ) | وسط الحلق: (ع ، ح) | أدنى الحلق: (غ ، خ)',
+                desc: 'التجويف الممتد من الحنجرة إلى بداية اللسان.',
+                traits: 'صفاتها: الجهر والهمس والشدة والرخاوة والاستعلاء في الغين والخاء.'
+            },
+            {
+                id: 'lisan',
+                title: '3. اللسان (المخرج العام الثالث - محقق)',
+                subPoints: 'يشمل 10 مخارج خاصة لـ 18 حرفاً',
+                letters: 'أقصى اللسان فوق (ق) | أقصى اللسان أسفل (ك) | وسط اللسان (ج ، ش ، ي) | حافة اللسان (ض) | أدنى الحافة (ل) | طرف اللسان (ن ، ر ، ط ، د ، ت ، ص ، ز ، س ، ظ ، ذ ، ث)',
+                desc: 'أعظم أعضاء النطق تفصيلاً ومخارج.',
+                traits: 'صفاتها: القلقلة، الصفير، الاستطالة (ض)، الانحراف والتكرير (ر).'
+            },
+            {
+                id: 'shafatain',
+                title: '4. الشفتان (المخرج العام الرابع - محقق)',
+                subPoints: 'يشمل مخرجين خاصين لـ 4 حروف',
+                letters: 'بطن الشفة السفلى مع الثنايا العليا: (ف) | بين الشفتين معاً: (ب ، م ، و غير المدية)',
+                desc: 'تخرج بانطباق الشفتين في الباء والميم، وبانضمامهما في الواو غير المدية.',
+                traits: 'صفاتها: الغنة الملازمة للميم، الإطباق والانفتاح.'
+            },
+            {
+                id: 'khaishoom',
+                title: '5. الخيشوم (المخرج العام الخامس - مقدر)',
+                subPoints: 'يشمل مخرجاً خاصاً لصوت الغنة',
+                letters: 'صوت الغنة المرّكب في جسم النون والميم',
+                desc: 'الخرق المنجذب داخل الأنف فوق سقف الحلق، وتخرج منه مراتب الغنة المختلفة.',
+                traits: 'مراتب الغنة: المشدد، المدغم كاملاً، المدغم ناقصاً، المخفى، والمتحرك.'
+            }
+        ];
+
+        // Complete Tajweed 4 Levels Curriculum Data
+        const tajweedLevelsData = {
+            level1: {
+                title: "المستوى الأول (التأسيسي)",
+                filePdf: "sum/one.pdf",
+                sections: [
+                    {
+                        heading: "الباب الأول: مدخل إلى علم التجويد",
+                        content: `
+                            <ul class="list-disc pr-5 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                <li><strong>تعريف القرآن الكريم:</strong> كلام الله تعالى المنزل على نبيه محمد ﷺ بواسطة جبريل عليه السلام، المعجز بلفظه، المتعبد بتلاوته، المنقول بالتواتر، المكتوب في المصاحف من الفاتحة إلى الناس.</li>
+                                <li><strong>التجويد لغة واصطلاحاً:</strong> لغة التحسين والإتقان، واصطلاحاً إخراج كل حرف من مخرجه وإعطاؤه حقه (الصفات اللازمة) ومستحقه (الصفات العارضة).</li>
+                                <li><strong>الحكم الشرعي:</strong> التجويد العلمي مندوب وفرض كفاية، بينما التجويد العملي واجب عيني على كل مسلم بالغ عاقل.</li>
+                                <li><strong>اللحن وأقسامه:</strong> اللحن الجلي (خطأ يخل بمبنى الكلمة ومعناها وحكمه حرام)، واللحن الخفي (خطأ يخل بعرف القراءة دون المعنى وحكمه مكروه).</li>
+                                <li><strong>الاستعاذة والبسملة:</strong> أحكام الاستعاذة، وأوجهها الأربعة مع البسملة عند بداية السورة (قطع الجميع، قطع الأول ووصل الثاني بالثالث، وصل الأول بالثاني وقطع الثالث، وصل الجميع)، وأوجه البسملة بين السورتين.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        heading: "الباب الثاني: أحكام النون الساكنة والتنوين",
+                        content: `
+                            <div class="space-y-3 text-sm">
+                                <div class="bg-gold-500/10 p-3 rounded-xl border border-gold-500/30">
+                                    <strong class="text-emerald-900 dark:text-gold-400 block mb-1">1. الإظهار الحلقي:</strong>
+                                    إخراج النون الساكنة من مخرجها من غير غنة ظاهرة عند حروف الحلق الستة: (ء، هـ، ع، ح، غ، خ).
+                                </div>
+                                <div class="bg-gold-500/10 p-3 rounded-xl border border-gold-500/30">
+                                    <strong class="text-emerald-900 dark:text-gold-400 block mb-1">2. الإدغام:</strong>
+                                    النطق بالحرفين حرفاً واحداً مشدداً كالثاني، وحروفه (يرملون).
+                                    <br>• <strong>إدغام بغنة:</strong> وحروفه (ينمو).
+                                    <br>• <strong>إدغام بغير غنة:</strong> وحروفه (ر، ل).
+                                    <br>• <strong>الكامل والناقص:</strong> الكامل في (ن، م، ر، ل)، والناقص في (و، ي). شريطة أن يكون من كلمتين، فإن كان في كلمة واحدة وجب الإظهار المطلق في (الدنيا، قنوان، صنوان، بنيان).
+                                </div>
+                                <div class="bg-gold-500/10 p-3 rounded-xl border border-gold-500/30">
+                                    <strong class="text-emerald-900 dark:text-gold-400 block mb-1">3. الإقلاب:</strong>
+                                    قلب النون الساكنة أو التنوين ميماً مخفاة بغنة عند حرف الباء (مثال: مِنْ بَعْدِ).
+                                </div>
+                                <div class="bg-gold-500/10 p-3 rounded-xl border border-gold-500/30">
+                                    <strong class="text-emerald-900 dark:text-gold-400 block mb-1">4. الإخفاء الحقيقي:</strong>
+                                    النطق بحالة بين الإظهار والإدغام عارياً عن التشديد مع بقاء الغنة عند الحروف الـ 15 المتبقية.
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        heading: "الباب الثالث: أحكام الميم الساكنة والنون والميم المشددتان",
+                        content: `
+                            <ul class="list-disc pr-5 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                <li><strong>الإخفاء الشفوي:</strong> للميم الساكنة عند حرف الباء (م + ب) مع الغنة.</li>
+                                <li><strong>الإدغام الشفوي (المتماثلين الصغير):</strong> عند الميم المتحركة (م + م).</li>
+                                <li><strong>الإظهار الشفوي:</strong> عند باقي الحروف، وأشد ما يكون إظهاراً عند الفاء والواو.</li>
+                                <li><strong>النون والميم المشددتان:</strong> وجوب الغنة فيهما بمقدار حركتين ويسمى كل منهما حرف غنة مشدد.</li>
+                                <li><strong>مراتب الغنة الخمس:</strong> المشدد، المدغم كاملاً بغنة، المدغم ناقصاً بغنة، المخفى، والمتحرك.</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            level2: {
+                title: "المستوى الثاني (التكميلي)",
+                filePdf: "sum/two.pdf",
+                sections: [
+                    {
+                        heading: "الباب الأول: أحكام المدود المتكاملة",
+                        content: `
+                            <div class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <p><strong>المد الأصلي (الطبيعي):</strong> يمد حركتين، ويلحق به مد التمكين، مد العوض، مد الصلة الصغرى، والمد الحرفي الطبيعي (حي طهر).</p>
+                                <p><strong>المد الفرعي بسبب الهمز:</strong></p>
+                                <ul class="list-disc pr-5 space-y-1">
+                                    <li><strong>الواجب المتصل:</strong> اجتماع حرف المد والهمز في كلمة (4-5 حركات، و6 عند الوقف).</li>
+                                    <li><strong>الجائز المنفصل:</strong> انفصال حرف المد في كلمة والهمز في بداية الأخرى (4 حركات لحفص)، وتلحق به الصلة الكبرى.</li>
+                                    <li><strong>مد البدل:</strong> تقدم الهمز على حرف المد (حركتان).</li>
+                                </ul>
+                                <p><strong>المد الفرعي بسبب السكون:</strong> العارض للسكون (2-4-6)، مد اللين العارض (2-4-6)، والمد اللازم (6 حركات كلمي وحرفي مثقل ومخفف)، ومد الفرق (في آلآن، الله، الذكرين).</p>
+                                <p><strong>مراتب المدود:</strong> أقوى المدود لازم فما اتصل ... فعارض فذو انفصال فبدل.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        heading: "الباب الثاني والثالث: المخارج والصفات والتفخيم والترقيق",
+                        content: `
+                            <ul class="list-disc pr-5 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                <li><strong>مذاهب المخارج:</strong> المختار 17 مخرجاً خاصاً على 5 مخارج عامة.</li>
+                                <li><strong>الصفات اللازمة المتبادلة:</strong> الهمس ضد الجهر، الشدة والتوسط ضد الرخاوة، الاستعلاء ضد الاستفال، الإطباق ضد الانفتاح، الإذلاق ضد الإصمات.</li>
+                                <li><strong>الصفات التي لا ضد لها:</strong> الصفير، القلقلة، اللين، الانحراف، التكرير، التفشي، الاستطالة.</li>
+                                <li><strong>التفخيم والترقيق:</strong> حروف الاستعلاء (خص ضغط قظ) مفخمة دائماً، ومراتب التفخيم 5. ترقيق الراء وتفخيمها وجواز الوجهين في (فرق، عين القطر، يسر، فأسر، مصر).</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            level3: {
+                title: "المستوى الثالث (المتقدم)",
+                filePdf: "sum/three.pdf",
+                sections: [
+                    {
+                        heading: "الباب الأول والثاني: العلاقات بين الحروف واللامات الساكنة",
+                        content: `
+                            <ul class="list-disc pr-5 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                <li><strong>العلاقات الأربع:</strong> التماثل، التجانس، التقارب، والتباعد. وتقسم كل منها إلى (صغير، كبير، مطلق).</li>
+                                <li><strong>أنواع اللامات الساكنة الـ 5:</strong> لام التعريف (شمسية وقمرية)، لام الاسم (أصلية مظهرة)، لام الفعل (تظهر وتدغم مع اللام والراء)، لام الحرف (في هل وبل)، ولام الأمر.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        heading: "الباب الثالث والرابع: البدء والوقف والابتداء والروم والإشمام",
+                        content: `
+                            <ul class="list-disc pr-5 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                <li><strong>همزة الوصل والقطع:</strong> قواعد حركة همزة الوصل عند البدء بالأسماء القياسية والسماعية، والأفعال، والحروف.</li>
+                                <li><strong>أحكام التقاء الساكنين:</strong> الحذف في حروف المد، والتحريك بالكسر أو الضم أو الفتح في الحروف الصحيحة.</li>
+                                <li><strong>أقسام الوقف الاختياري:</strong> التام، الكافي، الحسن، والقبيح.</li>
+                                <li><strong>السكتات الواجبة لحفص:</strong> أربعة مواضع (عوجا قيما، مرقدنا هذا، من راق، كلا بل ران).</li>
+                                <li><strong>كيفيات الوقف:</strong> السكون المحض، الروم (الإتيان ببعض الحركة بصوت خفي)، والإشمام (ضم الشفتين بعيد تسكين المضموم).</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            level4: {
+                title: "مستوى الإجازة (رواية حفص عن عاصم من طريق الشاطبية)",
+                filePdf: "sum/four.pdf",
+                fullPdf: "sum/all.pdf",
+                sections: [
+                    {
+                        heading: "أصول الرواية والمفاهيم العلمية والإسناد",
+                        content: `
+                            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                                بيان مفاهيم الرواية، الدراية، العناية، الرعاية، الإجازة، والإسناد المتصل للإمام الشاطبي رحمه الله حتى رسول الله ﷺ.
+                            </p>
+                            <ul class="list-disc pr-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                                <li><strong>المدود:</strong> التوسط (4 حركات) في المتصل والمنفصل.</li>
+                                <li><strong>الإمالة:</strong> إمالة واحدة في (مجراها) بسورة هود.</li>
+                                <li><strong>التسهيل:</strong> تسهيل الهمزة الثانية في (أأعجمي) بفصلت.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        heading: "انفرادات الإمام حفص الـ 39 والمقطوع والموصول",
+                        content: `
+                            <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                <p><strong>أبرز انفرادات حفص الـ 39:</strong> قراءة (هزوا، كفوا) بالواو، السكت على المواضع الأربعة، الضم والفتح في (ضعف، ضعفا) بالروم، فتح الياء في (معي، لي)، وإسكان ميم الجمع.</p>
+                                <p><strong>باب المقطوع والموصول:</strong> دراسة تفصيلية لـ 26 كلمة رسمية مع الأبيات الجزرية: <code>واعرف لمقطوع وموصول وتا ... في المصحف الإمام فيما قد أتى</code>.</p>
+                                <p><strong>باب التاءات والموازين السبعة:</strong> التاءات المفتوحة التي توقف بالتاء، ميزان الحروف الساكنة والغنات والمدود والقوة والتفخيم وتحريك الشفتين.</p>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        };
+
+        // Qiraat Reciters Data with Youtube Embedded Playlists for both Rawis
+        const qiraatData = [
+            { 
+                id: 1, 
+                name: "الإمام نافع المدني", 
+                rawa: ["قالون", "ورش"], 
+                osool: "تسهيل الهمزتين، صلة ميم الجمع لقالون، إمالة ورش ونقله للهمز ورواية طوال البدل.",
+                playlists: [
+                    { rawi: "رواية قالون عن نافع", url: "https://www.youtube.com/embed/videoseries?si=o9Z_4waTd1e1F5Nv&amp;list=PLNR8O3P-_i04sXA7-rFtqDjIXIYsy3s9L" },
+                    { rawi: "رواية ورش عن نافع", url: "https://www.youtube.com/embed/videoseries?si=NQjG7cgr_6VqGg2k&amp;list=PL2QDVz7bvzxL_126xGCOcf-nU_H2A-CgN" }
+                ]
+            },
+            { 
+                id: 2, 
+                name: "الإمام ابن كثير المكي", 
+                rawa: ["البزي", "قنبل"], 
+                osool: "صلة ميم الجمع دائماً، وتسهيل الهمزة الثانية دون إدخال، والقصر في المنفصل.",
+                playlists: [
+                    { rawi: "رواية البزي عن ابن كثير", url: "https://www.youtube.com/embed/videoseries?si=SzY7hVY8qQMnNW5V&amp;list=PLGAKBQrvRJ95YGxdeD98cLE70DnXx-Ot4" },
+                    { rawi: "رواية قنبل عن ابن كثير", url: "https://www.youtube.com/embed/eGVjNsrr7M0?si=YEazXJ922MTsJa8Y" }
+                ]
+            },
+            { 
+                id: 3, 
+                name: "الإمام أبو عمرو البصري", 
+                rawa: ["الدوري", "السوسي"], 
+                osool: "الإدغام الكبير للسوسي، الإمالة للدوري، والإدغام بين المقاربين.",
+                playlists: [
+                    { rawi: "رواية الدوري عن أبي عمرو", url: "https://www.youtube.com/embed/videoseries?si=rnx83F01LJ9opcra&amp;list=PLGAKBQrvRJ94E31KzBzzWJAUn3duV2BVC" },
+                    { rawi: "رواية السوسي عن أبي عمرو", url: "https://www.youtube.com/embed/videoseries?si=WuZBLGgRoImmGXgB&amp;list=PLGAKBQrvRJ96vv7TV0w040rnbaaLzdpRo" }
+                ]
+            },
+            { 
+                id: 4, 
+                name: "الإمام ابن عامر الشامي", 
+                rawa: ["هشام", "ابن ذكوان"], 
+                osool: "إدغام تاء التأنيث، تحقيق الهمز مع الإدخال لهشام، وإمالة ابن ذكوان.",
+                playlists: [
+                    { rawi: "رواية هشام عن ابن عامر", url: "https://www.youtube.com/embed/videoseries?si=mTuRngF-DkAqNUeJ&amp;list=PLGAKBQrvRJ95vvn2rXCk_LXHAqJldSdEj" },
+                    { rawi: "رواية ابن ذكوان عن ابن عامر", url: "https://www.youtube.com/embed/videoseries?si=xhfCw4lxnr5FGTXF&amp;list=PL2hoGhz2jBSrSCaWd0n-0SquWFUursUN2" }
+                ]
+            },
+            { 
+                id: 5, 
+                name: "الإمام عاصم الكوفي", 
+                rawa: ["شعبة", "حفص"], 
+                osool: "التوسط في المدين، السكتات الأربع لحفص من الشاطبية، وإمالة نائي لشعبة.",
+                playlists: [
+                    { rawi: "رواية شعبة عن عاصم", url: "https://www.youtube.com/embed/videoseries?si=aXaAh9Yg1n_fJuIi&amp;list=PL2hoGhz2jBSpx6sq4Ej5Ql5Cu8lPzidoj" },
+                    { rawi: "رواية حفص عن عاصم", url: "https://www.youtube.com/embed/videoseries?si=0ir-If7AAX5oOSWr&amp;list=PL2hoGhz2jBSqpWTv6svf4e3HCtPMwqY0g" }
+                ]
+            },
+            { 
+                id: 6, 
+                name: "الإمام حمزة الزيات", 
+                rawa: ["خلف", "خلاد"], 
+                osool: "الترك بالغنة، الوقف على الهمز بالتسهيل والإبدال، والإمالة الشديدة.",
+                playlists: [
+                    { rawi: "رواية خلف عن حمزة", url: "https://www.youtube.com/embed/videoseries?si=68v0qLl4owSQlclr&amp;list=PLGAKBQrvRJ964R_rU_PznE18M4COlp9oU" },
+                    { rawi: "رواية خلاد عن حمزة", url: "https://www.youtube.com/embed/videoseries?si=h2SpSMux7q66ECHV&amp;list=PLGAKBQrvRJ97U_bkCypjHRFAKJi4T_A3W" }
+                ]
+            },
+            { 
+                id: 7, 
+                name: "الإمام الكسائي الكوفي", 
+                rawa: ["أبو الحارث", "الدوري"], 
+                osool: "إمالة هاء التأنيث وما قبلها عند الوقف، وإمالة ذوات الياء.",
+                playlists: [
+                    { rawi: "رواية أبي الحارث عن الكسائي", url: "https://www.youtube.com/embed/videoseries?si=UC7THye0gUVPv2Vv&amp;list=PLGAKBQrvRJ97w_rATCfVVz6BvpqM_0Qe1" },
+                    { rawi: "رواية الدوري عن الكسائي", url: "https://www.youtube.com/embed/videoseries?si=uYle1Av8fLZsY4cO&amp;list=PL2hoGhz2jBSrEobQ_c9GmhD2LLa6a4nCU" }
+                ]
+            },
+            { 
+                id: 8, 
+                name: "الإمام أبو جعفر المدني", 
+                rawa: ["عيسى بن وردان", "ابن جماز"], 
+                osool: "التسهيل مع الإدخال، الإخفاء عند الخاء والغين، وصلة ميم الجمع.",
+                playlists: [
+                    { rawi: "رواية ابن وردان عن أبي جعفر", url: "https://www.youtube.com/embed/videoseries?si=DuvAfjEB0clAYMOV&amp;list=PLGAKBQrvRJ97HnTGkp61JvRdObE6OIJXZ" },
+                    { rawi: "رواية ابن جماز عن أبي جعفر", url: "https://www.youtube.com/embed/videoseries?si=i2qeoGs3HtIheRgO&amp;list=PLGAKBQrvRJ94lSRbr7W8_yHuY1zJUC5eq" }
+                ]
+            },
+            { 
+                id: 9, 
+                name: "الإمام يعقوب الحضرمي", 
+                rawa: ["رويس", "روح"], 
+                osool: "هاء الكناية وقصرها، السكت على الحروف المقطعة، وإدغام بعض المقاربين.",
+                playlists: [
+                    { rawi: "رواية رويس عن يعقوب", url: "https://www.youtube.com/embed/videoseries?si=1J-Hqk2eQn31uKQ2&amp;list=PLGAKBQrvRJ97QWaJaQWWKmJnGi3WP-ZAM" },
+                    { rawi: "رواية روح عن يعقوب", url: "https://www.youtube.com/embed/videoseries?si=XcliD28TchflBxJ0&amp;list=PLGAKBQrvRJ97KWqeavgdbP1-JKLHzSpL5" }
+                ]
+            },
+            { 
+                id: 10, 
+                name: "الإمام خلف العاشر", 
+                rawa: ["إسحاق", "إدريس"], 
+                osool: "عدم الغنة في النون والتنوين عند الواو والياء، والتوسط في الممدود.",
+                playlists: [
+                    { rawi: "رواية إسحاق عن خلف العاشر", url: "https://www.youtube.com/embed/videoseries?si=lSmeHcuuOPbiECVB&amp;list=PLGAKBQrvRJ96GRuUg5nkti2TGYuv3LQ1K" },
+                    { rawi: "رواية إدريس عن خلف العاشر", url: "https://www.youtube.com/embed/videoseries?si=cl5x9YuU87Armfc6&amp;list=PLGAKBQrvRJ97qpM46vvYVIL8hwmfUUFDJ" }
+                ]
+            }
+        ];
+
+        // YouTube Playlists Data
+        const playlists = [
+            { title: "مخارج الحروف والصفات - د. أيمن سويد", src: "https://www.youtube.com/embed/videoseries?si=JMUwCPZ8RSe1O5ur&amp;list=PL7HSgRWkJwjzq3OSPX6fx1Qp-OoGI-kZH", desc: "الشرح التشريحي والتطبيقي الدقيق لجميع المخارج مع حركة الفم واللسان." },
+            { title: "سلسلة التجويد المصور الكاملة", src: "https://www.youtube.com/embed/videoseries?si=DKoac7tAmEb4v6Pf&amp;list=PLCTifDArWwqJud0hfGmqG7OaPPwljvnCF", desc: "دروس تفاعلية مصورة تبيّن أحكام المدود، النون، والميم بالشكل واللون." },
+            { title: "تعليم جمع القراءات العشر الصغرى و الكبرى", src: "https://www.youtube.com/embed/videoseries?si=im2y6lEtCl-bWHo4&amp;list=PL_ltji5QtfR8ALEyMS5tN-a6P2bdirzST", desc: "نماذج قراءة عملية وتطبيقات للوجوه والقراءات العشر الكبرى والصغرى." }
+        ];
+
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                q: "كم عدد المخارج التفصيلية للحروف على القول المختار لإمام ابن الجزري؟",
+                options: ["14 مخرجًا", "17 مخرجًا", "15 مخرجًا", "10 مخارج"],
+                correct: 1,
+                exp: "القول المختار والمشهور عند ابن الجزري والجمهور أن المخارج التفصيلية 17 مخرجًا تنحصر في 5 مخارج عامة."
+            },
+            {
+                q: "ما الحكم في النون الساكنة عند التقائها بالباء في كلمة أو كلمتين؟",
+                options: ["الإظهار الحلقي", "الإدغام بغنة", "الإقلاب", "الإخفاء الشفوي"],
+                correct: 2,
+                exp: "الحكم هو الإقلاب، بقلب النون الساكنة أو التنوين ميماً مخفاة بغنة عند التقائها بالباء."
+            },
+            {
+                q: "كم عدد الكلمات التي وقع فيها الإدغام في كلمة واحدة ووجب فيها الإظهار المطلق؟",
+                options: ["كلمتان", "4 كلمات", "6 كلمات", "3 كلمات"],
+                correct: 1,
+                exp: "وقع في 4 كلمات بالقرآن الكريم: (الدنيا، قنوان، صنوان، بنيان) ويسمى إظهاراً مطلقاً."
+            },
+            {
+                q: "كم عدد السكتات الواجبة للإمام حفص عن عاصم من طريق الشاطبية؟",
+                options: ["سكتتان", "4 سكتات واجبة", "5 سكتات", "لا يوجد سكت واجب"],
+                correct: 1,
+                exp: "انفرد حفص بأربع سكتات واجبة: عوجاً قيما، مرقدنا هذا، من راق، وكلا بل ران."
+            },
+            {
+                q: "ما الموقف الأقوى والأعلى مرتبة في ترتيب أسباب المدود الفرعية؟",
+                options: ["المد المتصل", "المد اللازم", "المد المنفصل", "المد العارض للسكون"],
+                correct: 1,
+                exp: "المد اللازم هو أقوى المدود قاطبة حسب بيت المرتبة: أقوى المدود لازم فما اتصل ... فعارض فذو انفصال فبدل."
+            }
+        ];
+
+        // ENGINE CONTROLLERS
+        let currentQuizIndex = 0;
+        let score = 0;
+        let fontScale = 1;
+
+        window.onload = function() {
+            renderMakharijAccordion();
+            switchTajweedSub('level1');
+            renderQiraatGrid();
+            renderPlaylists();
+            loadQuizQuestion();
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-gold-400', 'bg-emerald-800/60', 'dark:bg-navy-900');
+                btn.classList.add('hover:text-gold-400');
+            });
+
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if(activeNav) {
+                activeNav.classList.add('text-gold-400', 'bg-emerald-800/60', 'dark:bg-navy-900');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun';
+            }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function changeFontSize(delta) {
+            fontScale += delta * 0.08;
+            if (fontScale < 0.85) fontScale = 0.85;
+            if (fontScale > 1.35) fontScale = 1.35;
+            document.getElementById('appContent').style.fontSize = `${fontScale}rem`;
+        }
+
+        function resetFontSize() {
+            fontScale = 1;
+            document.getElementById('appContent').style.fontSize = `1rem`;
+        }
+
+        function openPdfModal(pdfFilename, title) {
+            const modal = document.getElementById('pdfModal');
+            const iframe = document.getElementById('pdfIframe');
+            const modalTitle = document.getElementById('pdfModalTitle');
+            const downloadBtn = document.getElementById('pdfModalDownloadLink');
+
+            modalTitle.innerText = title;
+            iframe.src = encodeURI(pdfFilename);
+            downloadBtn.href = encodeURI(pdfFilename);
+
+            modal.classList.remove('hidden');
+        }
+
+        function closePdfModal() {
+            const modal = document.getElementById('pdfModal');
+            const iframe = document.getElementById('pdfIframe');
+            iframe.src = "";
+            modal.classList.add('hidden');
+        }
+
+        // Open/Close Imam Youtube Modal
+        function openImamModal(imamId) {
+            const imam = qiraatData.find(item => item.id === imamId);
+            if (!imam) return;
+
+            document.getElementById('imamModalTitle').innerText = `قوائم تشغيل تلاوات الراويين عن ${imam.name}`;
+            document.getElementById('imamModalDesc').innerText = `تلاوات عذبة وموثقة لكل من الراويين: (${imam.rawa.join(' - ')}) عن ${imam.name}.`;
+
+            const container = document.getElementById('imamPlaylistsContainer');
+            container.innerHTML = imam.playlists.map(p => `
+                <div class="bg-white dark:bg-navy-900 p-4 rounded-2xl border border-gold-500/30 shadow-md flex flex-col gap-3">
+                    <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner">
+                        <iframe class="w-full h-full" src="${p.url}" title="${p.rawi}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="text-center pt-1 border-t border-gold-500/10">
+                        <h4 class="font-amiri font-bold text-lg text-emerald-900 dark:text-gold-400">
+                            <i class="fa-solid fa-microphone-lines text-gold-500 ml-1"></i> ${p.rawi}
+                        </h4>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('imamModal').classList.remove('hidden');
+        }
+
+        function closeImamModal() {
+            const container = document.getElementById('imamPlaylistsContainer');
+            container.innerHTML = ''; // reset iframes to stop playback
+            document.getElementById('imamModal').classList.add('hidden');
+        }
+
+        function renderMakharijAccordion() {
+            const container = document.getElementById('makharijAccordionContainer');
+            container.innerHTML = makharijData.map((item, idx) => `
+                <div id="makhraj-card-${item.id}" class="bg-white dark:bg-navy-900 rounded-2xl border border-gold-500/30 shadow-md overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-${item.id}')" class="w-full text-right p-5 flex items-center justify-between bg-emerald-950/5 dark:bg-navy-950/50 hover:bg-gold-500/10 transition-colors">
+                        <div>
+                            <h4 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400">${item.title}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">${item.subPoints}</p>
+                        </div>
+                        <i id="icon-acc-${item.id}" class="fa-solid fa-chevron-down text-gold-500 transition-transform"></i>
+                    </button>
+                    <div id="acc-${item.id}" class="accordion-content ${idx === 0 ? 'open' : ''} px-5 pb-5 pt-2 space-y-3 text-sm border-t border-gold-500/10">
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${item.desc}</p>
+                        <div class="bg-gold-500/10 p-3 rounded-xl border border-gold-500/30">
+                            <strong class="text-emerald-900 dark:text-gold-400 block mb-1"><i class="fa-solid fa-font ml-1"></i> الحروف الخارجة:</strong>
+                            <span class="text-gray-800 dark:text-gray-200">${item.letters}</span>
+                        </div>
+                        <p class="text-xs text-emerald-800 dark:text-gold-300 font-semibold">${item.traits}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            if (el.classList.contains('open')) {
+                el.classList.remove('open');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+            } else {
+                el.classList.add('open');
+                if(icon) icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function selectMakhraj(id) {
+            switchTab('makharij');
+            const targetAcc = document.getElementById(`acc-${id}`);
+            if (targetAcc && !targetAcc.classList.contains('open')) {
+                toggleAccordion(`acc-${id}`);
+            }
+            const card = document.getElementById(`makhraj-card-${id}`);
+            if(card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.classList.add('ring-2', 'ring-gold-500');
+                setTimeout(() => card.classList.remove('ring-2', 'ring-gold-500'), 2000);
+            }
+        }
+
+        function switchTajweedSub(levelKey) {
+            document.querySelectorAll('.tajweed-sub-btn').forEach(btn => {
+                btn.className = "tajweed-sub-btn px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-navy-900 text-gray-700 dark:text-gray-200 border border-gold-500/30";
+            });
+            const activeBtn = document.getElementById(`subtab-${levelKey}`);
+            if(activeBtn) {
+                activeBtn.className = "tajweed-sub-btn px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-gold-500 text-navy-950 shadow";
+            }
+
+            const data = tajweedLevelsData[levelKey];
+            const container = document.getElementById('tajweedSubContent');
+
+            if (!data) return;
+
+            let sectionsHTML = data.sections.map(s => `
+                <div class="bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/30 shadow-md space-y-3">
+                    <h3 class="font-amiri font-bold text-xl text-emerald-900 dark:text-gold-400 border-b border-gold-500/20 pb-2">
+                        ${s.heading}
+                    </h3>
+                    <div>${s.content}</div>
+                </div>
+            `).join('');
+
+            let pdfActionsHTML = `
+                <div class="bg-gradient-to-r from-emerald-900 to-navy-900 text-white p-6 rounded-2xl border-2 border-gold-500/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+                    <div>
+                        <h4 class="font-amiri font-bold text-xl text-gold-400">${data.title} - المستند المصدري الكامل</h4>
+                        <p class="text-xs text-gray-300 mt-1">كتاب منهاج الدارسين - إعداد وتلخيص: محمد جهاد فؤاد عبد الله</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                        <button onclick="openPdfModal('${data.filePdf}', '${data.title}')" class="flex-1 sm:flex-initial bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold px-4 py-2.5 rounded-xl shadow transition-all text-xs flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-eye"></i> معاينة PDF
+                        </button>
+                        <a href="${encodeURI(data.filePdf)}" download class="flex-1 sm:flex-initial bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl border border-gold-500/30 shadow transition-all text-xs flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-download"></i> تحميل الملف
+                        </a>
+                        ${data.fullPdf ? `
+                            <a href="${encodeURI(data.fullPdf)}" download class="w-full sm:w-auto bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold px-4 py-2.5 rounded-xl border border-gold-500/40 shadow transition-all text-xs flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-pdf"></i> تحميل التلخيص الشامل لجميع المستويات
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = sectionsHTML + pdfActionsHTML;
+        }
+
+        // Render Qiraat Reciters Grid
+        function renderQiraatGrid() {
+            const container = document.getElementById('qiraatRecitersGrid');
+            container.innerHTML = qiraatData.map(r => `
+                <div onclick="openImamModal(${r.id})" class="cursor-pointer bg-white dark:bg-navy-900 p-6 rounded-2xl border border-gold-500/30 hover:border-gold-500 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all space-y-4 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 bg-gold-500 text-navy-950 font-bold px-4 py-1 rounded-br-xl text-xs">
+                        الإمام #${r.id}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-amiri font-bold text-2xl text-emerald-900 dark:text-gold-400 group-hover:text-gold-500 transition-colors">${r.name}</h4>
+                        <span class="w-10 h-10 rounded-full bg-gold-500/10 dark:bg-gold-500/20 text-gold-500 flex items-center justify-center group-hover:bg-gold-500 group-hover:text-navy-950 transition-all">
+                            <i class="fa-solid fa-circle-play text-lg"></i>
+                        </span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold text-gray-500 dark:text-gray-400 block">راوياه المعتمدان:</span>
+                        <div class="flex gap-2">
+                            ${r.rawa.map(raw => `<span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 px-3 py-1 rounded-lg text-xs font-bold border border-emerald-500/30">${raw}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="border-t border-gold-500/20 pt-3">
+                        <span class="text-xs font-bold text-gold-600 dark:text-gold-400 block mb-1">أهم أصول القراءة:</span>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">${r.osool}</p>
+                    </div>
+                    <div class="text-xs text-center text-gold-600 dark:text-gold-400 font-bold pt-2 border-t border-dashed border-gold-500/30 group-hover:underline">
+                        اضغط لفتح قوائم تشغيل التلاوات للروايتين <i class="fa-solid fa-arrow-left text-xs mr-1"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPlaylists() {
+            const container = document.getElementById('playlistContainer');
+            container.innerHTML = playlists.map((pl) => `
+                <div onclick="loadVideo('${pl.src}', '${pl.title}', '${pl.desc}')" class="cursor-pointer bg-white dark:bg-navy-900 p-4 rounded-xl border border-gold-500/30 shadow hover:border-gold-500 transition-all flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all">
+                        <i class="fa-solid fa-play text-sm"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-amiri font-bold text-sm text-emerald-900 dark:text-gold-400 group-hover:text-gold-500">${pl.title}</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">${pl.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadVideo(src, title, desc) {
+            document.getElementById('mainYouTubePlayer').src = src;
+            document.getElementById('currentVideoTitle').innerText = title;
+            document.getElementById('currentVideoDesc').innerText = desc;
+        }
+
+        function loadQuizQuestion() {
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quizCounter').innerText = `السؤال ${currentQuizIndex + 1} من ${quizQuestions.length}`;
+            document.getElementById('quizScoreBadge').innerText = `النتيجة: ${score}`;
+            document.getElementById('quizQuestion').innerText = q.q;
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = q.options.map((opt, idx) => `
+                <button onclick="checkAnswer(${idx})" class="quiz-opt-btn w-full text-right p-4 rounded-xl border border-gold-500/30 bg-emerald-950/5 dark:bg-navy-950/40 hover:bg-gold-500/20 transition-all text-sm font-medium flex items-center justify-between">
+                    <span>${opt}</span>
+                    <i class="fa-regular fa-circle text-gold-500"></i>
+                </button>
+            `).join('');
+
+            document.getElementById('quizExplanation').classList.add('hidden');
+            document.getElementById('nextQuestionBtn').classList.add('hidden');
+        }
+
+        function checkAnswer(selectedIdx) {
+            const q = quizQuestions[currentQuizIndex];
+            const buttons = document.querySelectorAll('.quiz-opt-btn');
+            
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIdx === q.correct) {
+                score += 20;
+                buttons[selectedIdx].classList.add('bg-emerald-500/30', 'border-emerald-500', 'text-emerald-900', 'dark:text-emerald-300');
+            } else {
+                buttons[selectedIdx].classList.add('bg-red-500/30', 'border-red-500', 'text-red-900', 'dark:text-red-300');
+                buttons[q.correct].classList.add('bg-emerald-500/30', 'border-emerald-500', 'text-emerald-900', 'dark:text-emerald-300');
+            }
+
+            const expBox = document.getElementById('quizExplanation');
+            expBox.className = "mt-6 p-4 rounded-xl border text-sm leading-relaxed bg-gold-500/10 border-gold-500/40 text-emerald-950 dark:text-gold-200 block";
+            expBox.innerHTML = `<strong>الشرح والتوضيح العلمي:</strong> ${q.exp}`;
+
+            document.getElementById('quizScoreBadge').innerText = `النتيجة: ${score}`;
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quizBox').classList.add('hidden');
+            const resBox = document.getElementById('quizResult');
+            resBox.classList.remove('hidden');
+            document.getElementById('finalScoreText').innerHTML = `حصلت على <strong class="text-gold-500 font-bold">${score}</strong> من 100 في تقييم الإتقان.`;
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizBox').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function handleGlobalSearch(query) {
+            const resultsBox = document.getElementById('searchResults');
+            const q = query.trim().toLowerCase();
+
+            if (!q) {
+                resultsBox.classList.add('hidden');
+                return;
+            }
+
+            let matches = [];
+
+            makharijData.forEach(m => {
+                if (m.title.includes(q) || m.letters.includes(q) || m.desc.includes(q)) {
+                    matches.push({ title: m.title, category: "المخارج والصفات", action: () => selectMakhraj(m.id) });
+                }
+            });
+
+            Object.keys(tajweedLevelsData).forEach(levelKey => {
+                const level = tajweedLevelsData[levelKey];
+                level.sections.forEach(sec => {
+                    if (sec.heading.includes(q) || sec.content.includes(q)) {
+                        matches.push({ title: `${level.title} - ${sec.heading}`, category: "أحكام التجويد", action: () => { switchTab('tajweed'); switchTajweedSub(levelKey); } });
+                    }
+                });
+            });
+
+            qiraatData.forEach(r => {
+                if (r.name.includes(q) || r.rawa.some(rw => rw.includes(q)) || r.osool.includes(q)) {
+                    matches.push({ title: `قراءة ${r.name}`, category: "القراءات العشر", action: () => switchTab('qiraat') });
+                }
+            });
+
+            if (matches.length > 0) {
+                resultsBox.innerHTML = matches.map((item, idx) => `
+                    <div onclick="executeSearchHit(${idx})" class="p-3 hover:bg-gold-500/20 rounded-lg cursor-pointer border-b border-gold-500/10 last:border-none">
+                        <span class="text-xs text-gold-600 dark:text-gold-400 font-bold block">${item.category}</span>
+                        <span class="text-sm font-medium text-gray-800 dark:text-gray-100">${item.title}</span>
+                    </div>
+                `).join('');
+                window.currentSearchMatches = matches;
+                resultsBox.classList.remove('hidden');
+            } else {
+                resultsBox.innerHTML = `<p class="p-3 text-xs text-gray-500 text-center">لا توجد نتائج مطابقة لمصطلح البحث.</p>`;
+                resultsBox.classList.remove('hidden');
+            }
+        }
+
+        function executeSearchHit(index) {
+            if (window.currentSearchMatches && window.currentSearchMatches[index]) {
+                window.currentSearchMatches[index].action();
+                document.getElementById('searchResults').classList.add('hidden');
+                document.getElementById('globalSearch').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
